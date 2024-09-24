@@ -9,9 +9,14 @@ def boltzmann_policy(x, tau):
         Output: idx -- chosen index
     """
     
-    ######### WRITE YOUR CODE HERE
-    ...
-    #########  
+    #apply softmax with temperature tau
+    exp_x = np.exp(np.array(x) / tau)   
+
+    #normalize
+    probs = exp_x / np.sum(exp_x)       
+
+    #sample a random index based on the probability distribution 
+    index = np.random.choice(len(x), p=probs)
 
     return index
 
@@ -45,15 +50,27 @@ def boltzmann(
     total_rewards = 0
     total_regret = 0
 
-    ######### WRITE YOUR CODE HERE
-    optimal_reward = ...
-    optimal_hero_index = ...
-    ######### 
+    optimal_hero_index = np.argmax([hero['true_success_probability'] for hero in heroes.heroes])
+    optimal_reward = heroes.heroes[optimal_hero_index]['true_success_probability']
     
     for t in range(heroes.total_quests):
-        ######### WRITE YOUR CODE HERE
-        ...
-        ######### 
+        #select a hero based on boltzmann policy
+        selected_hero_index = boltzmann_policy(values, tau)
+        
+        reward = heroes.attempt_quest(selected_hero_index)
+        values[selected_hero_index] += (reward - values[selected_hero_index]) / (heroes.heroes[selected_hero_index]['n_quests'])
+        rew_record.append(reward)
+        
+        total_rewards += reward
+        avg_ret_record.append(total_rewards / (t + 1))
+
+        regret = optimal_reward - reward
+        total_regret += regret
+        tot_reg_record.append(total_regret)
+
+        #check if optimal hero was selected
+        opt_action = 1 if selected_hero_index == optimal_hero_index else 0
+        opt_action_record.append(opt_action_record[-1] + (opt_action - opt_action_record[-1]) / (t+1) if t>0 else opt_action) 
     
     return rew_record, avg_ret_record, tot_reg_record, opt_action_record
 

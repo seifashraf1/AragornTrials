@@ -14,8 +14,8 @@ if __name__ == "__main__":
     results_list = []
 
     # Best eps-greedy 
-    eps_greedy_best_eps = 0.6          # Modify this param
-    eps_greedy_best_init_val = 0.      # Modify this param
+    eps_greedy_best_eps = 0.1          # Modify this param
+    eps_greedy_best_init_val = 0.5      # Modify this param
     rew_rec, avg_ret_rec, tot_reg_rec, opt_act_rec = run_trials(30, 
                                                                 heroes=heroes, bandit_method=eps_greedy, 
                                                                 eps=eps_greedy_best_eps, init_value=eps_greedy_best_init_val)
@@ -29,8 +29,8 @@ if __name__ == "__main__":
 
 
     # Best UCB
-    ucb_best_c = 10                    # Modify this param
-    ucb_best_init_value = 0.0          # Modify this param
+    ucb_best_c = 0.5                    # Modify this param
+    ucb_best_init_value = 1.0          # Modify this param
     rew_rec, avg_ret_rec, tot_reg_rec, opt_act_rec = run_trials(30, 
                                                                 heroes=heroes, bandit_method=ucb, 
                                                                 c=ucb_best_c, init_value=ucb_best_init_value)
@@ -43,8 +43,8 @@ if __name__ == "__main__":
     })
 
     # Best Boltzmann
-    boltzmann_best_tau = 0.5          # Modify this param
-    boltzmann_best_init_val = 0.0     # Modify this param
+    boltzmann_best_tau = 0.1          # Modify this param
+    boltzmann_best_init_val = 0.5     # Modify this param
     rew_rec, avg_ret_rec, tot_reg_rec, opt_act_rec = run_trials(30, 
                                                                 heroes=heroes, bandit_method=boltzmann, 
                                                                 tau=boltzmann_best_tau, init_value=boltzmann_best_init_val)
@@ -57,7 +57,7 @@ if __name__ == "__main__":
     })
 
     # Best Gradient Bandit
-    gradient_bandit_best_alpha = 2.75                            # Modify this param
+    gradient_bandit_best_alpha = 0.1                            # Modify this param
     gradient_bandit_use_baseline = False # True or False         # Modify this param
     rew_rec, avg_ret_rec, tot_reg_rec, opt_act_rec = run_trials(30, 
                                                                 heroes=heroes, bandit_method=gradient_bandit, 
